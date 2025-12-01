@@ -56,14 +56,22 @@ export default function HomePage() {
   };
 
   useEffect(() => {
-    if (!isLoading && videoRef.current) {
-      videoRef.current.play().catch(() => {
-        if (videoRef.current) {
-          videoRef.current.muted = true;
-          setIsMuted(true);
-          videoRef.current.play();
-        }
-      });
+    const video = videoRef.current;
+    if (!isLoading && video) {
+      // Bulletproof iOS autoplay fix
+      video.muted = true;
+      video.setAttribute("muted", "");
+      video.playsInline = true;
+      setIsMuted(true); // Sync state with the DOM
+
+      const playPromise = video.play();
+      if (playPromise !== undefined) {
+        playPromise.catch((error) => {
+          console.error("Autoplay was prevented:", error);
+          // If autoplay fails, the user will have to click to play.
+          // The UI controls will still work as expected.
+        });
+      }
     }
   }, [isLoading]);
 

@@ -31,7 +31,18 @@ export const VideoPlayer = ({
     if (!video) return;
 
     if (isPlaying) {
-      video.play().catch(console.error);
+      // Bulletproof iOS autoplay fix
+      video.muted = true;
+      video.setAttribute("muted", "");
+      video.playsInline = true;
+      setIsMuted(true); // Sync state
+
+      const playPromise = video.play();
+      if (playPromise !== undefined) {
+        playPromise.catch((error) => {
+          console.error("Play was prevented in VideoPlayer:", error);
+        });
+      }
     } else {
       video.pause();
     }
@@ -70,7 +81,11 @@ export const VideoPlayer = ({
     };
 
     video.addEventListener("timeupdate", updateProgress);
+    
+    // Ensure muted state on initial load
     video.muted = true;
+    video.setAttribute("muted", "");
+    video.playsInline = true;
     setIsMuted(true);
 
     return () => {
