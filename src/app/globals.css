@@ -36,15 +36,7 @@
   }
 }
 
-.testimonial-swiper .swiper-slide,
-.whatsapp-swiper .swiper-slide {
-  transition: transform 300ms ease, opacity 300ms ease;
-  transform: scale(0.95);
-  opacity: 0.8;
-}
-
-.testimonial-swiper .swiper-slide-centered,
-.whatsapp-swiper .swiper-slide-centered {
-  transform: scale(1);
-  opacity: 1;
+.testimonial-swiper .swiper-wrapper,
+.whatsapp-swiper .swiper-wrapper {
+  transition-timing-function: linear;
 }

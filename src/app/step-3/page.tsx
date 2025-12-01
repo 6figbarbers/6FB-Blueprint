@@ -125,9 +125,9 @@ export default function Step3Page() {
             <Swiper
               modules={[Autoplay]}
               loop={true}
-              centeredSlides={true}
+              speed={8000}
               autoplay={{
-                delay: 2500,
+                delay: 1,
                 disableOnInteraction: false,
               }}
               spaceBetween={16}
@@ -136,7 +136,7 @@ export default function Step3Page() {
                 768: { slidesPerView: 2.5 },
                 1024: { slidesPerView: 3 },
               }}
-              className="!px-2 !py-4 testimonial-swiper"
+              className="testimonial-swiper"
             >
               {testimonials.map((testimonial, index) => (
                 <SwiperSlide key={index}>
@@ -159,9 +159,9 @@ export default function Step3Page() {
               <Swiper
                 modules={[Autoplay]}
                 loop={true}
-                centeredSlides={true}
+                speed={8000}
                 autoplay={{
-                  delay: 2500,
+                  delay: 1,
                   disableOnInteraction: false,
                   reverseDirection: true,
                 }}
@@ -171,7 +171,7 @@ export default function Step3Page() {
                   640: { slidesPerView: 3.5 },
                   768: { slidesPerView: 4.5 },
                 }}
-                className="!px-2 !py-4 whatsapp-swiper"
+                className="whatsapp-swiper"
               >
                 {whatsappTestimonials.map((src, index) => (
                   <SwiperSlide key={index}>
