@@ -2,9 +2,10 @@
 
 import { useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
+import YouTube from "react-youtube";
 import { Button } from "@/components/ui/button";
 import { SplashScreen } from "@/components/splash-screen";
-import { Check } from "lucide-react";
+import { Check, Volume2, VolumeX } from "lucide-react";
 import { StepsLayout } from "@/components/steps-layout";
 
 export default function HomePage() {
@@ -13,9 +14,38 @@ export default function HomePage() {
   const router = useRouter();
 
   const [isLoading, setIsLoading] = useState(true);
+  const [player, setPlayer] = useState<any>(null);
+  const [isMuted, setIsMuted] = useState(true);
 
   const handleNextStep = () => {
     router.push("/step-2");
+  };
+
+  const onReady = (event: { target: any }) => {
+    setPlayer(event.target);
+  };
+
+  const toggleMute = () => {
+    if (!player) return;
+    if (isMuted) {
+      player.unMute();
+    } else {
+      player.mute();
+    }
+    setIsMuted(!isMuted);
+  };
+
+  const youtubeOpts = {
+    playerVars: {
+      autoplay: 1,
+      mute: 1,
+      loop: 1,
+      playlist: "33qZnzsltjA",
+      modestbranding: 1,
+      rel: 0,
+      showinfo: 0,
+      controls: 0,
+    },
   };
 
   return (
@@ -47,24 +77,36 @@ export default function HomePage() {
           <div
             className="
               relative w-full aspect-video
-              before:content-[''] before:absolute before:-inset-0.5 before:rounded-lg
+              before:content[''] before:absolute before:-inset-0.5 before:rounded-lg
               before:bg-[repeating-conic-gradient(from_var(--gradient-angle),theme(colors.green.300)_0%,theme(colors.green.500)_50%,theme(colors.green.300)_100%)]
               before:animate-rotating
 
-              after:content-[''] after:absolute after:-inset-0.5 after:rounded-lg
+              after:content[''] after:absolute after:-inset-0.5 after:rounded-lg
               after:bg-[repeating-conic-gradient(from_var(--gradient-angle),theme(colors.green.300)_0%,theme(colors.green.500)_50%,theme(colors.green.300)_100%)]
               after:animate-rotating after:blur-2xl after:opacity-75
             "
           >
-            <div className="w-full h-full rounded-lg overflow-hidden bg-black relative z-10">
-              <iframe
+            <div className="w-full h-full rounded-lg overflow-hidden bg-black relative z-10 group">
+              <YouTube
+                videoId="33qZnzsltjA"
+                opts={youtubeOpts}
+                onReady={onReady}
                 className="w-full h-full"
-                src="https://www.youtube.com/embed/33qZnzsltjA?autoplay=1&mute=1&loop=1&playlist=33qZnzsltjA&modestbranding=1&rel=0&showinfo=0&controls=0"
-                title="WELCOME TO THE 6 FIGURE BARBER BLUEPRINT"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowFullScreen
-              ></iframe>
+              />
+              <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <Button
+                  onClick={toggleMute}
+                  size="icon"
+                  variant="ghost"
+                  className="text-white bg-black/50 hover:bg-black/75 hover:text-white rounded-full"
+                >
+                  {isMuted ? (
+                    <VolumeX className="h-5 w-5" />
+                  ) : (
+                    <Volume2 className="h-5 w-5" />
+                  )}
+                </Button>
+              </div>
             </div>
           </div>
           <p className="mt-2 text-neutral-400 font-medium">
