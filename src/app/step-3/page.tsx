@@ -1,0 +1,190 @@
+"use client";
+
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import { StepsLayout } from "@/components/steps-layout";
+import { VideoPlayer } from "@/components/video-player";
+import { TestimonialCard } from "@/components/testimonial-card";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+
+const testimonials = [
+  {
+    name: "Adam",
+    text: "The Blueprint helped Adam confidently raise his prices, buy back hours of his week, and finally step out of burnout mode.",
+    image: "/Adam.jpg",
+    tag: "Blueprint Member",
+  },
+  {
+    name: "K-Cutz",
+    text: "The Blueprint showed Kcutz how to structure his days properly, giving him full control of his time and leading to more output with less stress.",
+    image: "/K Cutz.jpg",
+    tag: "Blueprint Member",
+  },
+  {
+    name: "Greedy Cutz",
+    text: "The Blueprint helped Greedy build a content system that took his videos viral and started bringing in new clients from his growth online.",
+    image: "/Greedy Cutz.jpg",
+    tag: "Blueprint Member",
+  },
+  {
+    name: "Chloe",
+    text: "The Blueprint helped Chloe break out of the 9 to 5 and become her own boss full time, transitioning into barbering with confidence.",
+    image: "/Chloe.jpg",
+    tag: "Blueprint Member",
+  },
+  {
+    name: "Vural",
+    text: "The Blueprint helped Vural escape the 'stuck behind the chair' lifestyle and transition into full self-employment, doubling his income.",
+    image: "/Vural.jpg",
+    tag: "Blueprint Member",
+  },
+  {
+    name: "Wrighty Cuts",
+    text: "The Blueprint helped Wrighty overcome his fear of the camera and step into content creation confidently, growing his personal brand.",
+    image: "/Wrighty Cuts.jpg",
+    tag: "Blueprint Member",
+  },
+];
+
+const videoTestimonials = [
+  "https://cbjrmuowhljcfiirdhvv.supabase.co/storage/v1/object/public/assets/6FB/Client%20Testimonial%201.mp4",
+  "https://cbjrmuowhljcfiirdhvv.supabase.co/storage/v1/object/public/assets/6FB/Client%20Testimonial%202%20-%20Matty%20Cuts%20(720p,%20h264,%20youtube).mp4",
+  "https://cbjrmuowhljcfiirdhvv.supabase.co/storage/v1/object/public/assets/6FB/From_never_cutting_hair_COMPRESSED_47MB.mp4",
+];
+
+const whatsappTestimonials = [
+  "/Whatsapp-1.jpg",
+  "/Whatsapp-2.jpg",
+  "/Whatsapp-3.jpg",
+  "/Whatsapp-4.jpg",
+];
+
+export default function Step3Page() {
+  const router = useRouter();
+  const [playingVideoSrc, setPlayingVideoSrc] = useState<string | null>(null);
+
+  const handleTogglePlay = (src: string) => {
+    setPlayingVideoSrc((currentSrc) => (currentSrc === src ? null : src));
+  };
+
+  const handleNextStep = () => {
+    router.push("/step-4");
+  };
+
+  return (
+    <StepsLayout currentStep={3}>
+      <div className="p-4 sm:p-8 md:p-12">
+        <div className="max-w-6xl mx-auto flex flex-col gap-8 text-center pb-12">
+          <div className="flex flex-col gap-2">
+            <h1 className="text-3xl sm:text-4xl font-bold text-foreground font-sans">
+              Look Through Client Feedback
+            </h1>
+            <p className="text-neutral-300 max-w-3xl mx-auto">
+              Before we speak, take a few minutes to see what's possible. These
+              are barbers who were once in the exact position you're in now,
+              stuck at the same income, same shop, same problems, and decided to
+              change it.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {videoTestimonials.map((src) => (
+              <VideoPlayer
+                key={src}
+                src={src}
+                isPlaying={playingVideoSrc === src}
+                onTogglePlay={() => handleTogglePlay(src)}
+              />
+            ))}
+          </div>
+
+          <Carousel
+            opts={{
+              align: "start",
+            }}
+            className="w-full"
+          >
+            <CarouselContent className="-ml-4">
+              {testimonials.map((testimonial, index) => (
+                <CarouselItem
+                  key={index}
+                  className="pl-4 basis-5/6 md:basis-1/2 lg:basis-1/3"
+                >
+                  <div className="p-1 h-full">
+                    <TestimonialCard
+                      name={testimonial.name}
+                      text={testimonial.text}
+                      image={testimonial.image}
+                      tag={testimonial.tag}
+                    />
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious className="hidden sm:flex" />
+            <CarouselNext className="hidden sm:flex" />
+          </Carousel>
+
+          <div className="flex flex-col gap-4 mt-8">
+            <h2 className="text-2xl sm:text-3xl font-bold text-foreground font-sans">
+              More Wins From The Group
+            </h2>
+            <Carousel
+              opts={{
+                align: "start",
+              }}
+              className="w-full"
+            >
+              <CarouselContent className="-ml-4">
+                {whatsappTestimonials.map((src, index) => (
+                  <CarouselItem
+                    key={index}
+                    className="pl-4 basis-1/2 sm:basis-1/3 md:basis-1/4"
+                  >
+                    <div className="p-1">
+                      <div className="overflow-hidden rounded-lg border border-neutral-800">
+                        <Image
+                          src={src}
+                          alt={`WhatsApp testimonial ${index + 1}`}
+                          width={400}
+                          height={800}
+                          className="w-full h-auto"
+                        />
+                      </div>
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className="hidden sm:flex" />
+              <CarouselNext className="hidden sm:flex" />
+            </Carousel>
+          </div>
+
+          <div className="bg-green-500/10 border border-green-400/30 rounded-lg p-4 text-center">
+            <p className="font-medium text-green-300 text-lg">
+              Your situation isn't unique. Your decision is.
+            </p>
+          </div>
+
+          <div className="flex justify-center mt-4">
+            <Button
+              onClick={handleNextStep}
+              size="lg"
+              className="w-full sm:w-auto bg-gradient-to-r from-green-300 to-green-500 text-black font-bold py-3 px-8 text-lg flex items-center gap-2 hover:from-green-400 hover:to-green-600"
+            >
+              Next Step
+            </Button>
+          </div>
+        </div>
+      </div>
+    </StepsLayout>
+  );
+}
