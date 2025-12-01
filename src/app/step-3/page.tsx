@@ -1,12 +1,11 @@
 "use client";
 
-import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { StepsLayout } from "@/components/steps-layout";
-import { VideoPlayer } from "@/components/video-player";
 import { TestimonialCard } from "@/components/testimonial-card";
+import YouTube from "react-youtube";
 import {
   Carousel,
   CarouselContent,
@@ -54,11 +53,7 @@ const testimonials = [
   },
 ];
 
-const videoTestimonials = [
-  "https://cbjrmuowhljcfiirdhvv.supabase.co/storage/v1/object/public/assets/6FB/Client%20Testimonial%201.mp4",
-  "https://cbjrmuowhljcfiirdhvv.supabase.co/storage/v1/object/public/assets/6FB/Client%20Testimonial%202%20-%20Matty%20Cuts%20(720p,%20h264,%20youtube).mp4",
-  "https://cbjrmuowhljcfiirdhvv.supabase.co/storage/v1/object/public/assets/6FB/From_never_cutting_hair_COMPRESSED_47MB.mp4",
-];
+const videoTestimonials = ["ynaQoEX1jkE", "NnLRA1T2h14", "20yC7qS3x4k"];
 
 const whatsappTestimonials = [
   "/Whatsapp-1.jpg",
@@ -69,14 +64,21 @@ const whatsappTestimonials = [
 
 export default function Step3Page() {
   const router = useRouter();
-  const [playingVideoSrc, setPlayingVideoSrc] = useState<string | null>(null);
-
-  const handleTogglePlay = (src: string) => {
-    setPlayingVideoSrc((currentSrc) => (currentSrc === src ? null : src));
-  };
 
   const handleNextStep = () => {
     router.push("/step-4");
+  };
+
+  const youtubeOpts = {
+    height: "100%",
+    width: "100%",
+    playerVars: {
+      autoplay: 0,
+      controls: 1,
+      modestbranding: 1,
+      rel: 0,
+      showinfo: 0,
+    },
   };
 
   return (
@@ -96,13 +98,28 @@ export default function Step3Page() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {videoTestimonials.map((src) => (
-              <VideoPlayer
-                key={src}
-                src={src}
-                isPlaying={playingVideoSrc === src}
-                onTogglePlay={() => handleTogglePlay(src)}
-              />
+            {videoTestimonials.map((videoId) => (
+              <div
+                key={videoId}
+                className="
+                  relative w-full aspect-video
+                  before:content-[''] before:absolute before:-inset-0.5 before:rounded-lg
+                  before:bg-[repeating-conic-gradient(from_var(--gradient-angle),theme(colors.green.300)_0%,theme(colors.green.500)_50%,theme(colors.green.300)_100%)]
+                  before:animate-rotating
+
+                  after:content-[''] after:absolute after:-inset-0.5 after:rounded-lg
+                  after:bg-[repeating-conic-gradient(from_var(--gradient-angle),theme(colors.green.300)_0%,theme(colors.green.500)_50%,theme(colors.green.300)_100%)]
+                  after:animate-rotating after:blur-xl after:opacity-50
+                "
+              >
+                <div className="w-full h-full rounded-lg overflow-hidden bg-black relative z-10">
+                  <YouTube
+                    videoId={videoId}
+                    opts={youtubeOpts}
+                    className="w-full h-full"
+                  />
+                </div>
+              </div>
             ))}
           </div>
 
