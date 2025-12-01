@@ -1,6 +1,5 @@
 "use client";
 
-import { useRef } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
@@ -8,11 +7,10 @@ import { StepsLayout } from "@/components/steps-layout";
 import { TestimonialCard } from "@/components/testimonial-card";
 import YouTube from "react-youtube";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from "swiper/modules";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { Autoplay } from "swiper/modules";
 
 import "swiper/css";
-import "swiper/css/navigation";
+import "swiper/css/autoplay";
 
 const testimonials = [
   {
@@ -64,8 +62,6 @@ const whatsappTestimonials = [
 
 export default function Step3Page() {
   const router = useRouter();
-  const testimonialsSwiperRef = useRef<any>(null);
-  const whatsappSwiperRef = useRef<any>(null);
 
   const handleNextStep = () => {
     router.push("/step-4");
@@ -127,17 +123,20 @@ export default function Step3Page() {
 
           <div className="relative w-full">
             <Swiper
-              onSwiper={(swiper) => {
-                testimonialsSwiperRef.current = swiper;
+              modules={[Autoplay]}
+              loop={true}
+              centeredSlides={true}
+              autoplay={{
+                delay: 2500,
+                disableOnInteraction: false,
               }}
-              modules={[Navigation]}
               spaceBetween={16}
-              slidesPerView={1}
+              slidesPerView={1.2}
               breakpoints={{
-                768: { slidesPerView: 2 },
+                768: { slidesPerView: 2.5 },
                 1024: { slidesPerView: 3 },
               }}
-              className="!px-2 !py-2"
+              className="!px-2 !py-4 testimonial-swiper"
             >
               {testimonials.map((testimonial, index) => (
                 <SwiperSlide key={index}>
@@ -150,22 +149,6 @@ export default function Step3Page() {
                 </SwiperSlide>
               ))}
             </Swiper>
-            <Button
-              variant="outline"
-              size="icon"
-              className="absolute h-8 w-8 rounded-full left-0 top-1/2 -translate-y-1/2 hidden sm:flex z-10"
-              onClick={() => testimonialsSwiperRef.current?.slidePrev()}
-            >
-              <ArrowLeft className="h-4 w-4" />
-            </Button>
-            <Button
-              variant="outline"
-              size="icon"
-              className="absolute h-8 w-8 rounded-full right-0 top-1/2 -translate-y-1/2 hidden sm:flex z-10"
-              onClick={() => testimonialsSwiperRef.current?.slideNext()}
-            >
-              <ArrowRight className="h-4 w-4" />
-            </Button>
           </div>
 
           <div className="flex flex-col gap-4 mt-8">
@@ -174,17 +157,21 @@ export default function Step3Page() {
             </h2>
             <div className="relative w-full">
               <Swiper
-                onSwiper={(swiper) => {
-                  whatsappSwiperRef.current = swiper;
+                modules={[Autoplay]}
+                loop={true}
+                centeredSlides={true}
+                autoplay={{
+                  delay: 2500,
+                  disableOnInteraction: false,
+                  reverseDirection: true,
                 }}
-                modules={[Navigation]}
                 spaceBetween={16}
-                slidesPerView={2}
+                slidesPerView={2.5}
                 breakpoints={{
-                  640: { slidesPerView: 3 },
-                  768: { slidesPerView: 4 },
+                  640: { slidesPerView: 3.5 },
+                  768: { slidesPerView: 4.5 },
                 }}
-                className="!px-2 !py-2"
+                className="!px-2 !py-4 whatsapp-swiper"
               >
                 {whatsappTestimonials.map((src, index) => (
                   <SwiperSlide key={index}>
@@ -200,22 +187,6 @@ export default function Step3Page() {
                   </SwiperSlide>
                 ))}
               </Swiper>
-              <Button
-                variant="outline"
-                size="icon"
-                className="absolute h-8 w-8 rounded-full left-0 top-1/2 -translate-y-1/2 hidden sm:flex z-10"
-                onClick={() => whatsappSwiperRef.current?.slidePrev()}
-              >
-                <ArrowLeft className="h-4 w-4" />
-              </Button>
-              <Button
-                variant="outline"
-                size="icon"
-                className="absolute h-8 w-8 rounded-full right-0 top-1/2 -translate-y-1/2 hidden sm:flex z-10"
-                onClick={() => whatsappSwiperRef.current?.slideNext()}
-              >
-                <ArrowRight className="h-4 w-4" />
-              </Button>
             </div>
           </div>
 
