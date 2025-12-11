@@ -31,16 +31,16 @@ export const SplashScreen = ({ onAnimationEnd, name }: SplashScreenProps) => {
         }
         return prev + 1;
       });
-    }, 85); // ~9 seconds to complete
+    }, 35); // ~4 seconds to complete
 
     // Fade out and end timers
     timers.push(
       setTimeout(() => {
         setIsFadingOut(true);
-      }, 9000) // Start fade out at 9s
+      }, 4000) // Start fade out at 4s
     );
 
-    timers.push(setTimeout(onAnimationEnd, 10000)); // End at 10s
+    timers.push(setTimeout(onAnimationEnd, 5000)); // End at 5s
 
     return () => {
       timers.forEach(clearTimeout);
