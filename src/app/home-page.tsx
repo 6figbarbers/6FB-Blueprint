@@ -71,7 +71,7 @@ export default function HomePage() {
           >
             <div className="w-full h-full rounded-lg overflow-hidden bg-black relative z-10 group">
               <YouTube
-                videoId="33qZnzsltjA"
+                videoId="uYlmah2zAgk"
                 opts={youtubeOpts}
                 className="w-full h-full"
               />
