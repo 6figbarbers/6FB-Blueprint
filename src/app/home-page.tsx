@@ -50,9 +50,9 @@ export default function HomePage() {
               Watch This Before Your Call
             </h2>
             <p className="text-sm sm:text-base text-neutral-300 max-w-3xl mx-auto">
-              In it, we break down exactly how the Blueprint helps barbers go
-              from a 3k per month to a 10k a month barber using systems,
-              content, and discipline.
+              We will break down exactly how the Blueprint develops barbers to
+              go from 3k per month to 10k a month using our proven systems,
+              processes and strategies.
             </p>
           </div>
           <p className="text-5xl animate-float">👇</p>
