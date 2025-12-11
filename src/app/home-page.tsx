@@ -51,8 +51,8 @@ export default function HomePage() {
             </h2>
             <p className="text-sm sm:text-base text-neutral-300 max-w-3xl mx-auto">
               In it, we break down exactly how the Blueprint helps barbers go
-              from £1k to £4k/month trapped behind the chair to a structured,
-              six-figure path using systems, content, and discipline.
+              from a 3k per month to a 10k a month barber using systems,
+              content, and discipline.
             </p>
           </div>
           <p className="text-5xl animate-float">👇</p>
@@ -79,7 +79,7 @@ export default function HomePage() {
           <p className="mt-2 text-neutral-400 font-medium">
             💡 We will reference this video on the call. If you skip it, you
             will be behind.
-          </p>
+          p>
           <div className="flex justify-center">
             <Button
               onClick={handleNextStep}
