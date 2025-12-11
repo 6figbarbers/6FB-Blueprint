@@ -79,7 +79,7 @@ export default function HomePage() {
           <p className="mt-2 text-neutral-400 font-medium">
             💡 We will reference this video on the call. If you skip it, you
             will be behind.
-          p>
+          </p>
           <div className="flex justify-center">
             <Button
               onClick={handleNextStep}
